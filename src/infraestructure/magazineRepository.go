@@ -55,6 +55,7 @@ func (r MagazineRepository) FindByAuthor(emails ...string) ([]domain.Magazine, e
 					break L
 				}
 				acumulator = append(acumulator, mg)
+				break L
 			}
 		}
 	}

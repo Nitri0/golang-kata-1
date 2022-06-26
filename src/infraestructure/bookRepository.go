@@ -55,6 +55,7 @@ func (r BookRepository) FindByAuthor(emails ...string) ([]domain.Book, error) {
 					break L
 				}
 				acumulator = append(acumulator, book)
+				break L
 			}
 		}
 	}
