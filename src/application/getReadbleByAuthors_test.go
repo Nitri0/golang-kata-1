@@ -37,10 +37,10 @@ func TestGetReadbleByAuthors_Invoke(t *testing.T) {
 			nil,
 		},
 	}
-	bookRepository, err := infraestructure.NewBookRepository()
+	bookRepository, err := infraestructure.NewMemoryBookRepository()
 	assert.NoError(t, err)
 
-	magazineRepository, err := infraestructure.NewMagazineRepository()
+	magazineRepository, err := infraestructure.NewMemoryMagazineRepository()
 	assert.NoError(t, err)
 
 	useCase := GetReadbleByAuthors{

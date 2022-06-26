@@ -16,11 +16,11 @@ type magazineRaw struct {
 	publishedAt string
 }
 
-type MagazineRepository struct {
+type MemoryMagazineRepository struct {
 	data []magazineRaw
 }
 
-func (r MagazineRepository) FindByIsbn(isbn string) (domain.Magazine, error) {
+func (r MemoryMagazineRepository) FindByIsbn(isbn string) (domain.Magazine, error) {
 	for _, magazineRaw := range r.data {
 		if magazineRaw.isbn == isbn {
 			bookFound, err := domain.NewMagazine(
@@ -38,7 +38,7 @@ func (r MagazineRepository) FindByIsbn(isbn string) (domain.Magazine, error) {
 	return domain.Magazine{}, domain.NotFoundReadbleErr
 }
 
-func (r MagazineRepository) FindByAuthor(emails ...string) ([]domain.Magazine, error) {
+func (r MemoryMagazineRepository) FindByAuthor(emails ...string) ([]domain.Magazine, error) {
 	acumulator := []domain.Magazine{}
 	for _, rawMg := range r.data {
 	L:
@@ -65,11 +65,11 @@ func (r MagazineRepository) FindByAuthor(emails ...string) ([]domain.Magazine, e
 
 	return acumulator, nil
 }
-func (r MagazineRepository) FindAllSortByTitle() ([]domain.Magazine, error) {
+func (r MemoryMagazineRepository) FindAllSortByTitle() ([]domain.Magazine, error) {
 	return nil, nil
 }
 
-func (r MagazineRepository) GetAll() ([]domain.Magazine, error) {
+func (r MemoryMagazineRepository) GetAll() ([]domain.Magazine, error) {
 	acumulator := []domain.Magazine{}
 	for _, rawMg := range r.data {
 		mg, err := domain.NewMagazine(
@@ -86,16 +86,16 @@ func (r MagazineRepository) GetAll() ([]domain.Magazine, error) {
 	return acumulator, nil
 }
 
-func NewMagazineRepository() (MagazineRepository, error) {
+func NewMemoryMagazineRepository() (MemoryMagazineRepository, error) {
 	f, err := os.Open(CSV_URL_PATH_MAGAZINE)
 	if err != nil {
-		return MagazineRepository{}, domain.InvalidDataOriginErr
+		return MemoryMagazineRepository{}, domain.InvalidDataOriginErr
 	}
 	csvReader := csv.NewReader(f)
 	csvReader.Comma = ';'
 	allData, err := csvReader.ReadAll()
 	if err != nil {
-		return MagazineRepository{}, domain.InvalidDataOriginErr
+		return MemoryMagazineRepository{}, domain.InvalidDataOriginErr
 	}
 	magazines := []magazineRaw{}
 	for _, data := range allData {
@@ -108,5 +108,5 @@ func NewMagazineRepository() (MagazineRepository, error) {
 		magazines = append(magazines, magazine)
 	}
 
-	return MagazineRepository{magazines}, nil
+	return MemoryMagazineRepository{magazines}, nil
 }

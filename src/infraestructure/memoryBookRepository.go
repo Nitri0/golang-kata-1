@@ -16,11 +16,11 @@ type booksRaw struct {
 	description string
 }
 
-type BookRepository struct {
+type MemoryBookRepository struct {
 	data []booksRaw
 }
 
-func (r BookRepository) FindByIsbn(isbn string) (domain.Book, error) {
+func (r MemoryBookRepository) FindByIsbn(isbn string) (domain.Book, error) {
 L:
 	for _, bookRaw := range r.data {
 		if bookRaw.isbn == isbn {
@@ -39,7 +39,7 @@ L:
 	return domain.Book{}, domain.NotFoundReadbleErr
 }
 
-func (r BookRepository) FindByAuthor(emails ...string) ([]domain.Book, error) {
+func (r MemoryBookRepository) FindByAuthor(emails ...string) ([]domain.Book, error) {
 	acumulator := []domain.Book{}
 	for _, rawBook := range r.data {
 	L:
@@ -65,11 +65,11 @@ func (r BookRepository) FindByAuthor(emails ...string) ([]domain.Book, error) {
 	return acumulator, nil
 }
 
-func (r BookRepository) FindAllSortByTitle() ([]domain.Book, error) {
+func (r MemoryBookRepository) FindAllSortByTitle() ([]domain.Book, error) {
 	return nil, nil
 }
 
-func (r BookRepository) GetAll() ([]domain.Book, error) {
+func (r MemoryBookRepository) GetAll() ([]domain.Book, error) {
 	acumulator := []domain.Book{}
 	for _, rawBook := range r.data {
 		book, err := domain.NewBook(
@@ -86,16 +86,16 @@ func (r BookRepository) GetAll() ([]domain.Book, error) {
 	return acumulator, nil
 }
 
-func NewBookRepository() (BookRepository, error) {
+func NewMemoryBookRepository() (MemoryBookRepository, error) {
 	f, err := os.Open(CSV_URL_PATH)
 	if err != nil {
-		return BookRepository{}, domain.InvalidDataOriginErr
+		return MemoryBookRepository{}, domain.InvalidDataOriginErr
 	}
 	csvReader := csv.NewReader(f)
 	csvReader.Comma = ';'
 	allData, err := csvReader.ReadAll()
 	if err != nil {
-		return BookRepository{}, domain.InvalidDataOriginErr
+		return MemoryBookRepository{}, domain.InvalidDataOriginErr
 	}
 	books := []booksRaw{}
 	for _, data := range allData {
@@ -108,5 +108,5 @@ func NewBookRepository() (BookRepository, error) {
 		books = append(books, book)
 	}
 
-	return BookRepository{books}, nil
+	return MemoryBookRepository{books}, nil
 }

@@ -39,10 +39,10 @@ func TestGetReadbleByIsbn_Invoke(t *testing.T) {
 
 	}
 
-	bookRepository, err := infraestructure.NewBookRepository()
+	bookRepository, err := infraestructure.NewMemoryBookRepository()
 	assert.Nil(t, err)
 
-	magRepository, err := infraestructure.NewMagazineRepository()
+	magRepository, err := infraestructure.NewMemoryMagazineRepository()
 	assert.Nil(t, err)
 
 	useCase := GetReadbleByIsbn{
