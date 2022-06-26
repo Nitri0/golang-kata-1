@@ -18,7 +18,13 @@ func TestGetReadbleByIsbn(t *testing.T) {
 			"Valid ISBN Book should be without error",
 			"5554-5545-4518",
 			nil,
-		}, {
+		},
+		{
+			"Valid ISBN Magazine should be without error",
+			"5454-5587-3210",
+			nil,
+		},
+		{
 			"valid ISBN not exist should be NotFoundReadbleErr",
 			"5554-5545-4512",
 			domain.NotFoundReadbleErr,
