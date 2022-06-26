@@ -42,6 +42,7 @@ L:
 func (r BookRepository) FindByAuthor(emails ...string) ([]domain.Book, error) {
 	acumulator := []domain.Book{}
 	for _, rawBook := range r.data {
+	L:
 		for _, email := range emails {
 			if strings.Contains(rawBook.authors, email) {
 				book, err := domain.NewBook(
@@ -51,7 +52,7 @@ func (r BookRepository) FindByAuthor(emails ...string) ([]domain.Book, error) {
 					rawBook.authors,
 				)
 				if err != nil {
-					return nil, err
+					break L
 				}
 				acumulator = append(acumulator, book)
 			}
@@ -62,12 +63,13 @@ func (r BookRepository) FindByAuthor(emails ...string) ([]domain.Book, error) {
 	}
 	return acumulator, nil
 }
+
 func (r BookRepository) FindAllSortByTitle() ([]domain.Book, error) {
 	return nil, nil
 }
 
 func (r BookRepository) GetAll() ([]domain.Book, error) {
-	var acumulator []domain.Book
+	acumulator := []domain.Book{}
 	for _, rawBook := range r.data {
 		book, err := domain.NewBook(
 			rawBook.title,

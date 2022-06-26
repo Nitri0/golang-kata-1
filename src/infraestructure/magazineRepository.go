@@ -41,6 +41,7 @@ func (r MagazineRepository) FindByIsbn(isbn string) (domain.Magazine, error) {
 func (r MagazineRepository) FindByAuthor(emails ...string) ([]domain.Magazine, error) {
 	acumulator := []domain.Magazine{}
 	for _, rawMg := range r.data {
+	L:
 		for _, email := range emails {
 			if strings.Contains(rawMg.authors, email) {
 				mg, err := domain.NewMagazine(
@@ -51,7 +52,7 @@ func (r MagazineRepository) FindByAuthor(emails ...string) ([]domain.Magazine, e
 				)
 				// TODO: take the error case
 				if err != nil {
-					break
+					break L
 				}
 				acumulator = append(acumulator, mg)
 			}
