@@ -44,6 +44,23 @@ func (r MagazineRepository) FindAllSortByTitle() ([]domain.Magazine, error) {
 	return nil, nil
 }
 
+func (r MagazineRepository) GetAll() ([]domain.Magazine, error) {
+	var acumulator []domain.Magazine
+	for _, rawMg := range r.data {
+		book, err := domain.NewMagazine(
+			rawMg.title,
+			rawMg.isbn,
+			rawMg.authors,
+			rawMg.publishedAt,
+		)
+		if err != nil {
+			return nil, err
+		}
+		acumulator = append(acumulator, book)
+	}
+	return acumulator, nil
+}
+
 func NewMagazineRepository() (MagazineRepository, error) {
 	f, err := os.Open(CSV_URL_PATH_MAGAZINE)
 	if err != nil {

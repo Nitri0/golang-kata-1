@@ -10,15 +10,18 @@ type GetAllReadble struct {
 }
 
 func (a GetAllReadble) Invoke() ([]domain.Readble, error) {
-	books, err := a.bookRepository.GetAll()
-	if err != nil {
-		return nil, err
+	books, err1 := a.bookRepository.GetAll()
+	mgs, err2 := a.magazineRepository.GetAll()
+	if err1 != nil && err2 != nil {
+		return nil, err1
 	}
 
 	var result []domain.Readble
-
 	for _, book := range books {
 		result = append(result, book)
+	}
+	for _, mg := range mgs {
+		result = append(result, mg)
 	}
 
 	return result, nil
