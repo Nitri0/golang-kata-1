@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestGetReadbleByIsbn(t *testing.T) {
+func TestGetReadbleByIsbn_Invoke(t *testing.T) {
 	tableCases := []struct {
 		nameTest    string
 		isbn        string
