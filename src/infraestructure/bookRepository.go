@@ -45,6 +45,23 @@ func (r BookRepository) FindAllSortByTitle() ([]domain.Book, error) {
 	return nil, nil
 }
 
+func (r BookRepository) GetAll() ([]domain.Book, error) {
+	var acumulator []domain.Book
+	for _, rawBook := range r.data {
+		book, err := domain.NewBook(
+			rawBook.title,
+			rawBook.isbn,
+			rawBook.description,
+			rawBook.authors,
+		)
+		if err != nil {
+			return nil, err
+		}
+		acumulator = append(acumulator, book)
+	}
+	return acumulator, nil
+}
+
 func NewBookRepository() (BookRepository, error) {
 	f, err := os.Open(CSV_URL_PATH)
 	if err != nil {
@@ -68,5 +85,4 @@ func NewBookRepository() (BookRepository, error) {
 	}
 
 	return BookRepository{books}, nil
-
 }
