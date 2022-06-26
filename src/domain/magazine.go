@@ -12,6 +12,10 @@ type Magazine struct {
 	publishedAt time.Time
 }
 
+func (b Magazine) GetTitle() string {
+	return b.title
+}
+
 func NewMagazine(title string, isbn string, authors string, publishedAt string) (Magazine, error) {
 	authorsSplited := strings.Split(authors, ",")
 	publishedAtFormated := time.Now() // RREFACTOR

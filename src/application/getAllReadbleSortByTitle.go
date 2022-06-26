@@ -9,14 +9,14 @@ type GetAllReadbleSortByTitle struct {
 	magazineRepository domain.IMagazineRepository
 }
 
-func (a GetAllReadbleSortByTitle) Invoke() ([]domain.Readble, error) {
+func (a GetAllReadbleSortByTitle) Invoke() ([]domain.IReadble, error) {
 	books, err1 := a.bookRepository.GetAll()
 	mgs, err2 := a.magazineRepository.GetAll()
 	if err1 != nil && err2 != nil {
 		return nil, err1
 	}
 
-	var result []domain.Readble
+	var result []domain.IReadble
 	for _, book := range books {
 		result = append(result, book)
 	}

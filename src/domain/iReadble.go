@@ -1,4 +1,5 @@
 package domain
 
-type Readble interface {
+type IReadble interface {
+	GetTitle() string
 }

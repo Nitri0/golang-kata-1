@@ -9,7 +9,7 @@ type GetReadbleByAuthors struct {
 	magazineRepository domain.IMagazineRepository
 }
 
-func (a GetReadbleByAuthors) Invoke(authors ...string) ([]domain.Readble, error) {
+func (a GetReadbleByAuthors) Invoke(authors ...string) ([]domain.IReadble, error) {
 	var books []domain.Book
 	var mgs []domain.Magazine
 
@@ -20,7 +20,7 @@ func (a GetReadbleByAuthors) Invoke(authors ...string) ([]domain.Readble, error)
 		return nil, err1
 	}
 
-	var result []domain.Readble
+	var result []domain.IReadble
 	for _, book := range books {
 		result = append(result, book)
 	}

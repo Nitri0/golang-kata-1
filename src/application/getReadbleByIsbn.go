@@ -9,7 +9,7 @@ type GetReadbleByIsbn struct {
 	magazineRepository domain.IMagazineRepository
 }
 
-func (i GetReadbleByIsbn) Invoke(isbn string) (domain.Readble, error) {
+func (i GetReadbleByIsbn) Invoke(isbn string) (domain.IReadble, error) {
 
 	resultsBooks, err1 := i.bookRepository.FindByIsbn(isbn)
 	if err1 == nil {

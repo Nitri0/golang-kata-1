@@ -1,8 +1,10 @@
 package application
 
 import (
+	"github.com/echocat/golang-kata-1/v1/src/domain"
 	"github.com/echocat/golang-kata-1/v1/src/infraestructure"
 	"github.com/stretchr/testify/assert"
+	"sort"
 	"testing"
 )
 
@@ -13,7 +15,7 @@ func TestGetAllReadble_Invoke(t *testing.T) {
 		expectError error
 	}{
 		{
-			testName:    "happy path, shouldn't be error",
+			testName:    "Get all readble shoud be orderer",
 			expectError: nil,
 		},
 	}
@@ -34,6 +36,15 @@ func TestGetAllReadble_Invoke(t *testing.T) {
 			result, err := useCase.Invoke()
 			assert.NoError(t, err)
 			assert.NotZero(t, len(result))
+			assert.True(t, sort.StringsAreSorted(getArrayTitleStrings(result)))
 		})
 	}
+}
+
+func getArrayTitleStrings(readbles []domain.IReadble) []string {
+	acumulator := []string{}
+	for _, readble := range readbles {
+		acumulator = append(acumulator, readble.GetTitle())
+	}
+	return acumulator
 }
