@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"github.com/echocat/golang-kata-1/v1/src/domain"
 	"os"
+	"strings"
 )
 
 const CSV_URL_PATH_MAGAZINE = "./../../resources/magazines.csv"
@@ -37,17 +38,39 @@ func (r MagazineRepository) FindByIsbn(isbn string) (domain.Magazine, error) {
 	return domain.Magazine{}, domain.NotFoundReadbleErr
 }
 
-func (r MagazineRepository) FindByAuthor(email ...string) ([]domain.Magazine, error) {
-	return nil, nil
+func (r MagazineRepository) FindByAuthor(emails ...string) ([]domain.Magazine, error) {
+	acumulator := []domain.Magazine{}
+	for _, rawMg := range r.data {
+		for _, email := range emails {
+			if strings.Contains(rawMg.authors, email) {
+				mg, err := domain.NewMagazine(
+					rawMg.title,
+					rawMg.isbn,
+					rawMg.authors,
+					rawMg.publishedAt,
+				)
+				// TODO: take the error case
+				if err != nil {
+					break
+				}
+				acumulator = append(acumulator, mg)
+			}
+		}
+	}
+	if len(acumulator) == 0 {
+		return nil, domain.NotFoundReadbleErr
+	}
+
+	return acumulator, nil
 }
 func (r MagazineRepository) FindAllSortByTitle() ([]domain.Magazine, error) {
 	return nil, nil
 }
 
 func (r MagazineRepository) GetAll() ([]domain.Magazine, error) {
-	var acumulator []domain.Magazine
+	acumulator := []domain.Magazine{}
 	for _, rawMg := range r.data {
-		book, err := domain.NewMagazine(
+		mg, err := domain.NewMagazine(
 			rawMg.title,
 			rawMg.isbn,
 			rawMg.authors,
@@ -56,7 +79,7 @@ func (r MagazineRepository) GetAll() ([]domain.Magazine, error) {
 		if err != nil {
 			return nil, err
 		}
-		acumulator = append(acumulator, book)
+		acumulator = append(acumulator, mg)
 	}
 	return acumulator, nil
 }

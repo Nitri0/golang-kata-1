@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"github.com/echocat/golang-kata-1/v1/src/domain"
 	"os"
+	"strings"
 )
 
 const CSV_URL_PATH = "./../../resources/books.csv"
@@ -38,8 +39,28 @@ L:
 	return domain.Book{}, domain.NotFoundReadbleErr
 }
 
-func (r BookRepository) FindByAuthor(email ...string) ([]domain.Book, error) {
-	return nil, nil
+func (r BookRepository) FindByAuthor(emails ...string) ([]domain.Book, error) {
+	acumulator := []domain.Book{}
+	for _, rawBook := range r.data {
+		for _, email := range emails {
+			if strings.Contains(rawBook.authors, email) {
+				book, err := domain.NewBook(
+					rawBook.title,
+					rawBook.isbn,
+					rawBook.description,
+					rawBook.authors,
+				)
+				if err != nil {
+					return nil, err
+				}
+				acumulator = append(acumulator, book)
+			}
+		}
+	}
+	if len(acumulator) == 0 {
+		return nil, domain.NotFoundReadbleErr
+	}
+	return acumulator, nil
 }
 func (r BookRepository) FindAllSortByTitle() ([]domain.Book, error) {
 	return nil, nil

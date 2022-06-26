@@ -1,6 +1,7 @@
 package application
 
 import (
+	"github.com/echocat/golang-kata-1/v1/src/infraestructure"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -19,8 +20,16 @@ func TestGetReadbleByAuthors_Invoke(t *testing.T) {
 			nil,
 		},
 	}
+	bookRepository, err := infraestructure.NewBookRepository()
+	assert.NoError(t, err)
 
-	useCase := GetReadbleByAuthors{}
+	magazineRepository, err := infraestructure.NewMagazineRepository()
+	assert.NoError(t, err)
+
+	useCase := GetReadbleByAuthors{
+		bookRepository,
+		magazineRepository,
+	}
 
 	for _, test := range testTable {
 		t.Run(test.testName, func(t *testing.T) {
