@@ -24,7 +24,7 @@ func TestGetAllReadble_Invoke(t *testing.T) {
 	magazineRepository, err := infraestructure.NewMemoryMagazineRepository()
 	assert.NoError(t, err)
 
-	useCase := GetAllReadble{
+	useCase := GetAllReadbleSortByTitle{
 		bookRepository,
 		magazineRepository,
 	}
