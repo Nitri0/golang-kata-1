@@ -1,7 +1,7 @@
 package domain
 
-type IRepository interface {
-	FindReadbleByIsbn(isbn string) (Readble, error)
-	FindReadbleByAuthor(email ...string) ([]Readble, error)
-	FindAllReadbleSortByTitle() ([]Readble, error)
+type IBookRepository interface {
+	FindByIsbn(isbn string) (Book, error)
+	FindByAuthor(email ...string) ([]Book, error)
+	FindAllSortByTitle() ([]Book, error)
 }
