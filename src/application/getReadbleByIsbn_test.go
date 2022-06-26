@@ -15,7 +15,7 @@ func TestGetReadbleByIsbn(t *testing.T) {
 		expectError error
 	}{
 		{
-			"Valid ISBN should be without error",
+			"Valid ISBN Book should be without error",
 			"5554-5545-4518",
 			nil,
 		}, {

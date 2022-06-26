@@ -6,6 +6,8 @@ import (
 	"os"
 )
 
+const CSV_URL_PATH = "./../../resources/books.csv"
+
 type booksRaw struct {
 	title       string
 	isbn        string
@@ -44,7 +46,7 @@ func (r BookRepository) FindAllSortByTitle() ([]domain.Book, error) {
 }
 
 func NewBookRepository() (BookRepository, error) {
-	f, err := os.Open("./../../resources/books.csv")
+	f, err := os.Open(CSV_URL_PATH)
 	if err != nil {
 		return BookRepository{}, domain.InvalidDataOriginErr
 	}
