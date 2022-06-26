@@ -68,4 +68,5 @@ func NewBookRepository() (BookRepository, error) {
 	}
 
 	return BookRepository{books}, nil
+
 }
