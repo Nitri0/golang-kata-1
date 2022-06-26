@@ -39,10 +39,15 @@ func TestGetReadbleByIsbn(t *testing.T) {
 
 	}
 
-	repository, err := infraestructure.NewBookRepository()
+	bookRepository, err := infraestructure.NewBookRepository()
 	assert.Nil(t, err)
 
-	useCase := GetReadbleByIsbn{repository}
+	magRepository, err := infraestructure.NewMagazineRepository()
+	assert.Nil(t, err)
+
+	useCase := GetReadbleByIsbn{
+		bookRepository,
+		magRepository}
 
 	for _, tc := range tableCases {
 		t.Run(tc.nameTest, func(t *testing.T) {
