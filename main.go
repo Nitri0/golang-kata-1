@@ -1,11 +1,9 @@
 package main
 
-import "fmt"
+import "github.com/echocat/golang-kata-1/v1/presentation/cmd"
 
 func main() {
-	fmt.Println(welcomeMessage())
-}
-
-func welcomeMessage() string {
-	return "Hello world!"
+	cmdapp := cmd.ConsoleApp{}
+	cmdapp.InitInMemoryConsoleApp()
+	cmdapp.Start()
 }
