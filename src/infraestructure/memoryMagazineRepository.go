@@ -98,14 +98,16 @@ func NewMemoryMagazineRepository() (MemoryMagazineRepository, error) {
 		return MemoryMagazineRepository{}, domain.InvalidDataOriginErr
 	}
 	magazines := []magazineRaw{}
-	for _, data := range allData {
-		magazine := magazineRaw{
-			data[0],
-			data[1],
-			data[2],
-			data[3],
+	for index, data := range allData {
+		if index != 0 {
+			magazine := magazineRaw{
+				data[0],
+				data[1],
+				data[2],
+				data[3],
+			}
+			magazines = append(magazines, magazine)
 		}
-		magazines = append(magazines, magazine)
 	}
 
 	return MemoryMagazineRepository{magazines}, nil

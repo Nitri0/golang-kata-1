@@ -36,7 +36,7 @@ func TestGetAllReadble_Invoke(t *testing.T) {
 			result, err := useCase.Invoke()
 			assert.NoError(t, err)
 			assert.NotZero(t, len(result))
-			assert.True(t, sort.StringsAreSorted(getArrayTitleStrings(result)))
+			assert.True(t, sort.StringsAreSorted(getArrayTitleStrings(result)), "Should be orderer")
 		})
 	}
 }

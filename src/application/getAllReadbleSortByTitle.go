@@ -2,6 +2,7 @@ package application
 
 import (
 	"github.com/echocat/golang-kata-1/v1/src/domain"
+	"sort"
 )
 
 type GetAllReadbleSortByTitle struct {
@@ -23,6 +24,12 @@ func (a GetAllReadbleSortByTitle) Invoke() ([]domain.IReadble, error) {
 	for _, mg := range mgs {
 		result = append(result, mg)
 	}
-
+	orderByTitle(result)
 	return result, nil
+}
+
+func orderByTitle(readbles []domain.IReadble) {
+	sort.SliceStable(readbles, func(i, j int) bool {
+		return readbles[i].GetTitle() < readbles[j].GetTitle()
+	})
 }

@@ -98,14 +98,16 @@ func NewMemoryBookRepository() (MemoryBookRepository, error) {
 		return MemoryBookRepository{}, domain.InvalidDataOriginErr
 	}
 	books := []booksRaw{}
-	for _, data := range allData {
-		book := booksRaw{
-			data[0],
-			data[1],
-			data[2],
-			data[3],
+	for index, data := range allData {
+		if index != 0 {
+			book := booksRaw{
+				data[0],
+				data[1],
+				data[2],
+				data[3],
+			}
+			books = append(books, book)
 		}
-		books = append(books, book)
 	}
 
 	return MemoryBookRepository{books}, nil
