@@ -5,16 +5,16 @@ import (
 )
 
 type GetReadbleByAuthors struct {
-	bookRepository     domain.IBookRepository
-	magazineRepository domain.IMagazineRepository
+	BookRepository     domain.IBookRepository
+	MagazineRepository domain.IMagazineRepository
 }
 
 func (a GetReadbleByAuthors) Invoke(authors ...string) ([]domain.IReadble, error) {
 	var books []domain.Book
 	var mgs []domain.Magazine
 
-	books, err1 := a.bookRepository.FindByAuthor(authors...)
-	mgs, err2 := a.magazineRepository.FindByAuthor(authors...)
+	books, err1 := a.BookRepository.FindByAuthor(authors...)
+	mgs, err2 := a.MagazineRepository.FindByAuthor(authors...)
 
 	if err1 != nil && err2 != nil {
 		return nil, err1

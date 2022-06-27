@@ -6,13 +6,13 @@ import (
 )
 
 type GetAllReadbleSortByTitle struct {
-	bookRepository     domain.IBookRepository
-	magazineRepository domain.IMagazineRepository
+	BookRepository     domain.IBookRepository
+	MagazineRepository domain.IMagazineRepository
 }
 
 func (a GetAllReadbleSortByTitle) Invoke() ([]domain.IReadble, error) {
-	books, err1 := a.bookRepository.GetAll()
-	mgs, err2 := a.magazineRepository.GetAll()
+	books, err1 := a.BookRepository.GetAll()
+	mgs, err2 := a.MagazineRepository.GetAll()
 	if err1 != nil && err2 != nil {
 		return nil, err1
 	}

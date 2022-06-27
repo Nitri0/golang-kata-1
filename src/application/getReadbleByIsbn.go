@@ -5,18 +5,18 @@ import (
 )
 
 type GetReadbleByIsbn struct {
-	bookRepository     domain.IBookRepository
-	magazineRepository domain.IMagazineRepository
+	BookRepository     domain.IBookRepository
+	MagazineRepository domain.IMagazineRepository
 }
 
 func (i GetReadbleByIsbn) Invoke(isbn string) (domain.IReadble, error) {
 
-	resultsBooks, err1 := i.bookRepository.FindByIsbn(isbn)
+	resultsBooks, err1 := i.BookRepository.FindByIsbn(isbn)
 	if err1 == nil {
 		return resultsBooks, nil
 	}
 
-	resultsMagazine, err2 := i.magazineRepository.FindByIsbn(isbn)
+	resultsMagazine, err2 := i.MagazineRepository.FindByIsbn(isbn)
 
 	if err2 == nil {
 		return resultsMagazine, nil
